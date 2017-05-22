@@ -1,0 +1,16 @@
+Package: sparklygraphs
+Type: Package
+Title: R interface for GraphFrames
+Version: 0.1.0
+Authors@R: person("Kevin", "Kuo", email = "kevinykuo@gmail.com", role = c("aut", "cre"))
+Maintainer: Kevin Kuo <kevinykuo@gmail.com>
+Description: R interface for GraphFrames, a package for Apache Spark which provides
+  DataFrame-based graphs, see <https://graphframes.github.io/>.
+License: Apache License 2.0
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1.9000
+Depends:
+    sparklyr (>= 0.5.4)
+Suggests:
+    testthat

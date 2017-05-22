@@ -53,11 +53,10 @@ gf_graphframe <- function(vertices = NULL, edges) {
 
 #' @export
 print.gf_graphframe <- function(x, ...) {
-  cat("GraphFrame")
-  cat("# Vertices", sep = "\n")
+  cat("Vertices", sep = "\n")
   print(x$vertices)
   print_newline()
-  cat("# Edges", sep = "\n")
+  cat("Edges", sep = "\n")
   print(x$edges)
   invisible(x)
 }

@@ -46,13 +46,13 @@ gf_graphframe <- function(vertices = NULL, edges) {
                    sdf_register(),
                  graphframe = g)
 
-  class(object) <- "gf_graphframe"
+  class(object) <- "graphframe"
 
   object
 }
 
 #' @export
-print.gf_graphframe <- function(x, ...) {
+print.graphframe <- function(x, ...) {
   cat("Vertices", sep = "\n")
   print(x$vertices)
   print_newline()
@@ -103,12 +103,12 @@ gf_register.spark_jobj <- function(x) {
                    invoke("edges") %>%
                    sdf_register(),
                  graphframe = x)
-  class(object) <- "gf_graphframe"
+  class(object) <- "graphframe"
   object
 }
 
 #' @export
-gf_register.gf_graphframe <- function(x) {
+gf_register.graphframe <- function(x) {
   x
 }
 

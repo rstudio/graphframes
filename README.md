@@ -17,7 +17,7 @@ devtools::install_github("kevinykuo/sparklygraphs")
 Otherwise, install first `sparklyr` from CRAN using:
 
 ``` r
-packages.install("sparklyr")
+install.packages("sparklyr")
 ```
 
 The examples make use of the `highschool` dataset from the `ggplot` package.
@@ -61,38 +61,36 @@ gf_graphframe(vertices_tbl, edges_tbl) %>%
     ## 
     ## Result:
     ## Vertices
-    ## Source:     table<sparklyr_tmp_1217d6e14f587> [?? x 2]
-    ## Database:   spark_connection
-    ## 
+    ## # Source:   table<sparklyr_tmp_12784c26f9a2> [?? x 2]
+    ## # Database: spark_connection
     ##       id    pagerank
     ##    <dbl>       <dbl>
-    ## 1     12 0.012169139
-    ## 2     12 0.012169139
-    ## 3     59 0.001151867
-    ## 4     59 0.001151867
-    ## 5      1 0.155808486
-    ## 6      1 0.155808486
-    ## 7     20 0.035269712
-    ## 8     20 0.035269712
-    ## 9     45 0.023715824
+    ##  1    12 0.012169139
+    ##  2    12 0.012169139
+    ##  3    59 0.001151867
+    ##  4    59 0.001151867
+    ##  5     1 0.155808486
+    ##  6     1 0.155808486
+    ##  7    20 0.035269712
+    ##  8    20 0.035269712
+    ##  9    45 0.023715824
     ## 10    45 0.023715824
     ## # ... with 127 more rows
     ## 
     ## Edges
-    ## Source:     table<sparklyr_tmp_1217d2203aa87> [?? x 3]
-    ## Database:   spark_connection
-    ## 
+    ## # Source:   table<sparklyr_tmp_1278452cf00e9> [?? x 3]
+    ## # Database: spark_connection
     ##      src   dst     weight
     ##    <dbl> <dbl>      <dbl>
-    ## 1     13     6 0.02777778
-    ## 2     13     6 0.02777778
-    ## 3     13     6 0.02777778
-    ## 4     13     6 0.02777778
-    ## 5     13     6 0.02777778
-    ## 6     13     6 0.02777778
-    ## 7     13     6 0.02777778
-    ## 8     13     6 0.02777778
-    ## 9     13     6 0.02777778
+    ##  1    13     6 0.02777778
+    ##  2    13     6 0.02777778
+    ##  3    13     6 0.02777778
+    ##  4    13     6 0.02777778
+    ##  5    13     6 0.02777778
+    ##  6    13     6 0.02777778
+    ##  7    13     6 0.02777778
+    ##  8    13     6 0.02777778
+    ##  9    13     6 0.02777778
     ## 10    13     6 0.02777778
     ## # ... with 1.245e+04 more rows
 
@@ -113,20 +111,19 @@ For instance, one can calcualte the degrees of vertices using `gf_degrees` as fo
 gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
 ```
 
-    ## Source:     table<sparklyr_tmp_1217d77a513d5> [?? x 2]
-    ## Database:   spark_connection
-    ## 
+    ## # Source:   table<sparklyr_tmp_127845eb8ff39> [?? x 2]
+    ## # Database: spark_connection
     ##       id degree
     ##    <dbl>  <int>
-    ## 1     55     25
-    ## 2      6     10
-    ## 3     13     16
-    ## 4      7      6
-    ## 5     12     11
-    ## 6     63     21
-    ## 7     58      8
-    ## 8     41     19
-    ## 9     48     15
+    ##  1    55     25
+    ##  2     6     10
+    ##  3    13     16
+    ##  4     7      6
+    ##  5    12     11
+    ##  6    63     21
+    ##  7    58      8
+    ##  8    41     19
+    ##  9    48     15
     ## 10    59     11
     ## # ... with 60 more rows
 

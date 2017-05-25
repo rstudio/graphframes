@@ -27,7 +27,7 @@ devtools::install_github("kevinykuo/sparklygraphs")
 Otherwise, install first `sparklyr` from CRAN using:
 
 ```{r eval=FALSE}
-packages.install("sparklyr")
+install.packages("sparklyr")
 ```
 
 The examples make use of the `highschool` dataset from the `ggplot` package.

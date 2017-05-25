@@ -1,0 +1,100 @@
+---
+title: "sparklygraphs: R interface for GraphFrames"
+output:
+  github_document:
+    fig_width: 9
+    fig_height: 5
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(fig.path = "tools/readme/", dev = "png")
+```
+
+- Support for [GraphFrames](https://graphframes.github.io/) which aims to provide the functionality of [GraphX](http://spark.apache.org/graphx/).
+- Perform graph algorithms like: [PageRank](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.PageRank), [ShortestPaths](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.ShortestPaths) and many [others](https://graphframes.github.io/api/scala/#package).
+- Designed to work with [sparklyr](https://spark.rstudio.com) and the [sparklyr extensions](http://spark.rstudio.com/extensions.html).
+
+## Installation
+
+For those already using `sparklyr` simply run:
+
+```{r eval=FALSE}
+devtools::install_github("kevinykuo/sparklygraphs")
+```
+
+Otherwise, install first `sparklyr` from CRAN using:
+
+```{r eval=FALSE}
+packages.install("sparklyr")
+```
+
+The examples make use of the `highschool` dataset from the `ggplot` package.
+
+## Getting Started
+
+We will calculate [PageRank](https://en.wikipedia.org/wiki/PageRank) over the `highschool` dataset as follows:
+
+```{r message=FALSE}
+library(sparklygraphs)
+library(sparklyr)
+library(dplyr)
+
+# connect to spark using sparklyr
+sc <- spark_connect(master = "local", version = "2.1.0")
+
+# copy highschool dataset to spark
+highschool_tbl <- copy_to(sc, ggraph::highschool, "highschool")
+
+# create a table with unique vertices using dplyr
+vertices_tbl <- sdf_bind_rows(
+  highschool_tbl %>% distinct(from) %>% transmute(id = from),
+  highschool_tbl %>% distinct(to) %>% transmute(id = to)
+)
+
+# create a table with <source, destination> edges
+edges_tbl <- highschool_tbl %>% transmute(src = from, dst = to)
+
+gf_graphframe(vertices_tbl, edges_tbl) %>%
+  gf_pagerank(reset_prob = 0.15, max_iter = 10L, source_id = "1")
+```
+
+## Further Reading
+
+Appart from calculating `PageRank` using `gf_pagerank`, the following functions are available: 
+
+- gf_bfs: Breadth-first search (BFS).
+- gf_connected_components: Connected components.
+- gf_shortest_paths: Shortest paths algorithm.
+- gf_scc: Strongly connected components.
+- gf_triangle_count: Computes the number of triangles passing through each vertex and others.
+
+For instance, one can calcualte the degrees of vertices using `gf_degrees` as follows:
+
+```{r message=FALSE}
+gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
+```
+
+In order to visualize large `sparklygraphs`, one can use `sample_n` and then use `ggraph` with `igraph` to visualize the graph as follows:
+
+```{r message=FALSE}
+library(ggraph)
+library(igraph)
+
+graph <- highschool_tbl %>%
+  sample_n(20) %>%
+  collect() %>%
+  graph_from_data_frame()
+
+ggraph(graph, layout = 'kk') + 
+    geom_edge_link(aes(colour = factor(year))) + 
+    geom_node_point() + 
+    ggtitle('An example')
+```
+
+Finally, we disconnect from Spark:
+
+```{r}
+spark_disconnect(sc)
+```

@@ -1,44 +1,156 @@
 sparklygraphs: R interface for GraphFrames
 ================
 
-```r
+-   Support for [GraphFrames](https://graphframes.github.io/) which aims to provide the functionality of [GraphX](http://spark.apache.org/graphx/).
+-   Perform graph algorithms like: [PageRank](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.PageRank), [ShortestPaths](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.ShortestPaths) and many [others](https://graphframes.github.io/api/scala/#package).
+-   Designed to work with [sparklyr](https://spark.rstudio.com) and the [sparklyr extensions](http://spark.rstudio.com/extensions.html).
+
+Installation
+------------
+
+For those already using `sparklyr` simply run:
+
+``` r
+devtools::install_github("kevinykuo/sparklygraphs")
+```
+
+Otherwise, install first `sparklyr` from CRAN using:
+
+``` r
+packages.install("sparklyr")
+```
+
+The examples make use of the `highschool` dataset from the `ggplot` package.
+
+Getting Started
+---------------
+
+We will calculate [PageRank](https://en.wikipedia.org/wiki/PageRank) over the `highschool` dataset as follows:
+
+``` r
 library(sparklygraphs)
+library(sparklyr)
 library(dplyr)
+
+# connect to spark using sparklyr
 sc <- spark_connect(master = "local", version = "2.1.0")
-v <- data.frame(id = letters[1:7],
-                name = c("Alice", "Bob", "Charlie", "David", "Esther",
-                         "Fanny", "Gabby"))
-e <- data.frame(src = c("a", "b", "c", "f", "e", "e", "d", "a"),
-                dst = c("b", "c", "b", "c", "f", "d", "a", "e"))
-v_tbl <- copy_to(sc, v)
-e_tbl <- copy_to(sc, e)
-g <- gf_graphframe(vertices = v_tbl, edges = e_tbl)
-pr <- gf_pagerank(g, reset_prob = 0.15, max_iter = 10L, source_id = "a")
-gf_algo_result(pr)
-# Vertices
-# # Source:   table<sparklyr_tmp_129731efa1c63> [?? x 3]
-# # Database: spark_connection
-# id    name   pagerank
-# <chr>   <chr>      <dbl>
-# 1     e  Esther 0.07527103
-# 2     a   Alice 0.17710832
-# 3     f   Fanny 0.03189214
-# 4     g   Gabby 0.00000000
-# 5     d   David 0.03189214
-# 6     c Charlie 0.24655465
-# 7     b     Bob 0.26993848
-# 
-# Edges
-# # Source:   table<sparklyr_tmp_12973365db778> [?? x 3]
-# # Database: spark_connection
-# src   dst weight
-# <chr> <chr>  <dbl>
-# 1     b     c    1.0
-# 2     c     b    1.0
-# 3     d     a    1.0
-# 4     e     f    0.5
-# 5     a     e    0.5
-# 6     a     b    0.5
-# 7     e     d    0.5
-# 8     f     c    1.0
+
+# copy highschool dataset to spark
+highschool_tbl <- copy_to(sc, ggraph::highschool, "highschool")
+
+# create a table with unique vertices using dplyr
+vertices_tbl <- sdf_bind_rows(
+  highschool_tbl %>% distinct(from) %>% transmute(id = from),
+  highschool_tbl %>% distinct(to) %>% transmute(id = to)
+)
+
+# create a table with <source, destination> edges
+edges_tbl <- highschool_tbl %>% transmute(src = from, dst = to)
+
+gf_graphframe(vertices_tbl, edges_tbl) %>%
+  gf_pagerank(reset_prob = 0.15, max_iter = 10L, source_id = "1")
+```
+
+    ## Call: gf_pagerank(., reset_prob = 0.15, max_iter = 10L, source_id = "1")
+    ## 
+    ## Algo parameters:
+    ##   Tolerance: 
+    ##   Reset probability: 0.15
+    ##   Max iterations: 10
+    ##   Source ID: 1
+    ## 
+    ## Result:
+    ## Vertices
+    ## Source:     table<sparklyr_tmp_1217d6e14f587> [?? x 2]
+    ## Database:   spark_connection
+    ## 
+    ##       id    pagerank
+    ##    <dbl>       <dbl>
+    ## 1     12 0.012169139
+    ## 2     12 0.012169139
+    ## 3     59 0.001151867
+    ## 4     59 0.001151867
+    ## 5      1 0.155808486
+    ## 6      1 0.155808486
+    ## 7     20 0.035269712
+    ## 8     20 0.035269712
+    ## 9     45 0.023715824
+    ## 10    45 0.023715824
+    ## # ... with 127 more rows
+    ## 
+    ## Edges
+    ## Source:     table<sparklyr_tmp_1217d2203aa87> [?? x 3]
+    ## Database:   spark_connection
+    ## 
+    ##      src   dst     weight
+    ##    <dbl> <dbl>      <dbl>
+    ## 1     13     6 0.02777778
+    ## 2     13     6 0.02777778
+    ## 3     13     6 0.02777778
+    ## 4     13     6 0.02777778
+    ## 5     13     6 0.02777778
+    ## 6     13     6 0.02777778
+    ## 7     13     6 0.02777778
+    ## 8     13     6 0.02777778
+    ## 9     13     6 0.02777778
+    ## 10    13     6 0.02777778
+    ## # ... with 1.245e+04 more rows
+
+Further Reading
+---------------
+
+Appart from calculating `PageRank` using `gf_pagerank`, the following functions are available:
+
+-   gf\_bfs: Breadth-first search (BFS).
+-   gf\_connected\_components: Connected components.
+-   gf\_shortest\_paths: Shortest paths algorithm.
+-   gf\_scc: Strongly connected components.
+-   gf\_triangle\_count: Computes the number of triangles passing through each vertex and others.
+
+For instance, one can calcualte the degrees of vertices using `gf_degrees` as follows:
+
+``` r
+gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
+```
+
+    ## Source:     table<sparklyr_tmp_1217d77a513d5> [?? x 2]
+    ## Database:   spark_connection
+    ## 
+    ##       id degree
+    ##    <dbl>  <int>
+    ## 1     55     25
+    ## 2      6     10
+    ## 3     13     16
+    ## 4      7      6
+    ## 5     12     11
+    ## 6     63     21
+    ## 7     58      8
+    ## 8     41     19
+    ## 9     48     15
+    ## 10    59     11
+    ## # ... with 60 more rows
+
+In order to visualize large `sparklygraphs`, one can use `sample_n` and then use `ggraph` with `igraph` to visualize the graph as follows:
+
+``` r
+library(ggraph)
+library(igraph)
+
+graph <- highschool_tbl %>%
+  sample_n(20) %>%
+  collect() %>%
+  graph_from_data_frame()
+
+ggraph(graph, layout = 'kk') + 
+    geom_edge_link(aes(colour = factor(year))) + 
+    geom_node_point() + 
+    ggtitle('An example')
+```
+
+![](tools/readme/unnamed-chunk-5-1.png)
+
+Finally, we disconnect from Spark:
+
+``` r
+spark_disconnect(sc)
 ```

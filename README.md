@@ -1,6 +1,8 @@
 sparklygraphs: R interface for GraphFrames
 ================
 
+[![Travis-CI Build Status](https://travis-ci.org/kevinykuo/sparklygraphs.svg?branch=master)](https://travis-ci.org/kevinykuo/sparklygraphs)
+
 -   Support for [GraphFrames](https://graphframes.github.io/) which aims to provide the functionality of [GraphX](http://spark.apache.org/graphx/).
 -   Perform graph algorithms like: [PageRank](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.PageRank), [ShortestPaths](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.ShortestPaths) and many [others](https://graphframes.github.io/api/scala/#package).
 -   Designed to work with [sparklyr](https://spark.rstudio.com) and the [sparklyr extensions](http://spark.rstudio.com/extensions.html).
@@ -61,7 +63,7 @@ gf_graphframe(vertices_tbl, edges_tbl) %>%
     ## 
     ## Result:
     ## Vertices
-    ## # Source:   table<sparklyr_tmp_12784c26f9a2> [?? x 2]
+    ## # Source:   table<sparklyr_tmp_db8db93c13d> [?? x 2]
     ## # Database: spark_connection
     ##       id    pagerank
     ##    <dbl>       <dbl>
@@ -78,7 +80,7 @@ gf_graphframe(vertices_tbl, edges_tbl) %>%
     ## # ... with 127 more rows
     ## 
     ## Edges
-    ## # Source:   table<sparklyr_tmp_1278452cf00e9> [?? x 3]
+    ## # Source:   table<sparklyr_tmp_db8d117391bb> [?? x 3]
     ## # Database: spark_connection
     ##      src   dst     weight
     ##    <dbl> <dbl>      <dbl>
@@ -111,7 +113,7 @@ For instance, one can calcualte the degrees of vertices using `gf_degrees` as fo
 gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
 ```
 
-    ## # Source:   table<sparklyr_tmp_127845eb8ff39> [?? x 2]
+    ## # Source:   table<sparklyr_tmp_db8d3702b9cb> [?? x 2]
     ## # Database: spark_connection
     ##       id degree
     ##    <dbl>  <int>

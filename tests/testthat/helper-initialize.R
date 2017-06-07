@@ -1,6 +1,3 @@
-if (! match("2.0.0", sparklyr::spark_installed_versions()$spark))
-  sparklyr::spark_install(version = "2.0.0")
-
 # helper functions from sparklyr tests
 # https://github.com/rstudio/sparklyr/blob/master/tests/testthat/helper-initialize.R
 testthat_spark_connection <- function(version = NULL) {
@@ -51,3 +48,11 @@ test_requires <- function(...) {
 
   invisible(TRUE)
 }
+
+sc <- tryCatch(
+  testthat_spark_connection(version = "2.0.0"),
+  error = function(e) {
+    sparklyr::spark_install(version = "2.0.0")
+    testthat_spark_connection(version = "2.0.0")
+  }
+)

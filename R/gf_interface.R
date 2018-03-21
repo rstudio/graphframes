@@ -15,18 +15,32 @@ spark_graphframe <- function(x, ...) {
   x$graphframe
 }
 
+new_graphframe <- function(jobj) {
+  structure(
+    list(
+      vertices = jobj %>%
+        invoke("vertices") %>%
+        sdf_register(),
+      edges = jobj %>%
+        invoke("edges") %>%
+        sdf_register(),
+      .jobj = jobj
+    ),
+    class = "graphframe"
+  )
+}
+
 #' Create a new GraphFrame
-#' @param vertices a tbl_spark representing vertices
-#' @param edges a tbl_psark representing edges
+#'
+#' @param vertices A \code{tbl_spark} representing vertices.
+#' @param edges A \code{tbl_psark} representing edges.
 #' @export
 gf_graphframe <- function(vertices = NULL, edges) {
-  # vertices <- spark_dataframe(vertices)
-  # edges <- spark_dataframe(edges)
   sc <- edges %>%
     spark_dataframe() %>%
     spark_connection()
 
-  g <- if (is.null(vertices)) {
+  jobj <- if (is.null(vertices)) {
     invoke_static(sc,
                   "org.graphframes.GraphFrame",
                   "fromEdges",
@@ -38,17 +52,7 @@ gf_graphframe <- function(vertices = NULL, edges) {
                spark_dataframe(edges))
   }
 
-  object <- list(vertices = g %>%
-                   invoke("vertices") %>%
-                   sdf_register(),
-                 edges = g %>%
-                   invoke("edges") %>%
-                   sdf_register(),
-                 graphframe = g)
-
-  class(object) <- "graphframe"
-
-  object
+  new_graphframe(jobj)
 }
 
 #' @export
@@ -103,15 +107,7 @@ gf_register <- function(x) {
 
 #' @export
 gf_register.spark_jobj <- function(x) {
-  object <- list(vertices = x %>%
-                   invoke("vertices") %>%
-                   sdf_register(),
-                 edges = x %>%
-                   invoke("edges") %>%
-                   sdf_register(),
-                 graphframe = x)
-  class(object) <- "graphframe"
-  object
+  new_graphframe(x)
 }
 
 #' @export

@@ -7,9 +7,9 @@
 gf_graphframe(vertices = NULL, edges)
 }
 \arguments{
-\item{vertices}{a tbl_spark representing vertices}
+\item{vertices}{A \code{tbl_spark} representing vertices.}
 
-\item{edges}{a tbl_psark representing edges}
+\item{edges}{A \code{tbl_psark} representing edges.}
 }
 \description{
 Create a new GraphFrame

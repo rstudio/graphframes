@@ -58,13 +58,12 @@ gf_graphframe <- function(vertices = NULL, edges) {
 #' @export
 print.graphframe <- function(x, ...) {
   extract_and_print <- function(x) {
-    output <- capture.output(x)
+    output <- utils::capture.output(x)
     extracted_output <- paste0("  ",
            output[3:length(output)])
     cat(extracted_output, sep = "\n")
   }
-  cat("GraphFrame")
-  print_newline()
+  cat("GraphFrame\n")
   cat("Vertices:", sep = "\n")
   extract_and_print(tibble::glimpse(x$vertices))
   cat("Edges:", sep = "\n")

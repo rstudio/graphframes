@@ -13,5 +13,6 @@ gf_triangle_count(x, ...)
 \item{...}{Optional arguments, currently not used.}
 }
 \description{
-Computes the number of triangles passing through each vertex.
+This algorithm ignores edge direction; i.e., all edges are treated
+  as undirected. In a multigraph, duplicate edges will be counted only once.
 }

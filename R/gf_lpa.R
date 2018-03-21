@@ -1,11 +1,19 @@
 #' Label propagation algorithm (LPA)
 #'
+#' Run static Label Propagation for detecting communities in networks. Each node in the
+#'   network is initially assigned to its own community. At every iteration, nodes send
+#'   their community affiliation to all neighbors and update their state to the mode
+#'   community affiliation of incoming messages. LPA is a standard community detection
+#'    algorithm for graphs. It is very inexpensive
+#'   computationally, although (1) convergence is not guaranteed and (2) one can
+#'   end up with trivial solutions (all nodes are identified into a single community).
+#'
 #' @template roxlate-gf-x
-#' @param max_iter maximum number of iterations
+#' @param max_iter Maximum number of iterations.
 #' @template roxlate-gf-dots
 #' @export
 gf_lpa <- function(x, max_iter, ...) {
-  ensure_scalar_integer(max_iter)
+  max_iter <- ensure_scalar_integer(max_iter)
 
   gf <- spark_graphframe(x)
 
@@ -13,28 +21,7 @@ gf_lpa <- function(x, max_iter, ...) {
     invoke("labelPropagation") %>%
     invoke("maxIter", max_iter)
 
-  result <- algo %>%
-    invoke("run")
-
-  params <- match.call()
-
-  gf_algo("lpa", algo,
-          result = result,
-          max_iter = max_iter,
-          input = gf,
-          params = params)
-}
-
-#' @export
-print.gf_algo_lpa <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
-  gf_algo_print_call(x)
-  print_newline()
-
-  cat(paste0("Algo parameters:"),
-      print_param("Max iterations", x$max_iter),
-      sep = "\n")
-  print_newline()
-  cat(paste0("Result:"))
-  print_newline()
-  print(gf_algo_result(x))
+  algo %>%
+    invoke("run") %>%
+    sdf_register()
 }

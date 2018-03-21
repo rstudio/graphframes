@@ -11,14 +11,15 @@ gf_connected_components(x, broadcast_threshold = 1000000L,
 \item{x}{An object coercable to a GraphFrame (typically, a
 \code{gf_graphframe}).}
 
-\item{broadcast_threshold}{broadcast threshold in propagating component assignments}
+\item{broadcast_threshold}{Broadcast threshold in propagating component assignments.}
 
-\item{algorithm}{'graphframes' or 'graphx'}
+\item{algorithm}{One of 'graphframes' or 'graphx'.}
 
-\item{checkpoint_interval}{checkpoint interval in terms of number of iterations}
+\item{checkpoint_interval}{Checkpoint interval in terms of number of iterations.}
 
 \item{...}{Optional arguments, currently not used.}
 }
 \description{
-Connected components
+Computes the connected component membership of each vertex and returns a DataFrame
+   of vertex information with each vertex assigned a component ID.
 }

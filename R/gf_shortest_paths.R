@@ -1,41 +1,22 @@
 #' Shortest paths
 #'
+#' Computes shortest paths from every vertex to the given set of landmark vertices.
+#'   Note that this takes edge direction into account.
+#'
 #' @template roxlate-gf-x
-#' @param landmarks IDs of landmark verticdes
+#' @param landmarks IDs of landmark vertices.
 #' @template roxlate-gf-dots
 #' @export
 gf_shortest_paths <- function(x, landmarks, ...) {
-  lapply(landmarks, ensure_scalar_character)
+  landmarks <- lapply(landmarks, ensure_scalar_character)
 
   gf <- spark_graphframe(x)
 
   algo <- gf %>%
     invoke("shortestPaths") %>%
-    invoke("landmarks", as.list(landmarks))
+    invoke("landmarks", landmarks)
 
-  result <- algo %>%
-    invoke("run")
-
-  params <- match.call()
-
-  gf_algo("shortest_paths", algo,
-          result = result,
-          landmarks = landmarks,
-          input = gf,
-          params = params)
+  algo %>%
+    invoke("run") %>%
+    sdf_register()
 }
-
-#' @export
-print.gf_algo_shortest_paths <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
-  gf_algo_print_call(x)
-  print_newline()
-
-  cat(paste0("Algo parameters:"),
-      print_param("Landmarks", x$landmarks),
-      sep = "\n")
-  print_newline()
-  cat(paste0("Result:"))
-  print_newline()
-  print(gf_algo_result(x))
-}
-

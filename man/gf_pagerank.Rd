@@ -4,20 +4,20 @@
 \alias{gf_pagerank}
 \title{PageRank}
 \usage{
-gf_pagerank(x, tol = NULL, reset_prob = 0.15, max_iter = NULL,
+gf_pagerank(x, tol = NULL, reset_probability = 0.15, max_iter = NULL,
   source_id = NULL, ...)
 }
 \arguments{
 \item{x}{An object coercable to a GraphFrame (typically, a
 \code{gf_graphframe}).}
 
-\item{tol}{tolerance}
+\item{tol}{Tolerance.}
 
-\item{reset_prob}{reset probability}
+\item{reset_probability}{Reset probability.}
 
-\item{max_iter}{maximum number of iterations}
+\item{max_iter}{Maximum number of iterations.}
 
-\item{source_id}{(Optional) source vertex for a personalized pagerank}
+\item{source_id}{(Optional) Source vertex for a personalized pagerank.}
 
 \item{...}{Optional arguments, currently not used.}
 }

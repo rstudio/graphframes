@@ -10,10 +10,11 @@ gf_scc(x, max_iter, ...)
 \item{x}{An object coercable to a GraphFrame (typically, a
 \code{gf_graphframe}).}
 
-\item{max_iter}{maximum number of iterations}
+\item{max_iter}{Maximum number of iterations.}
 
 \item{...}{Optional arguments, currently not used.}
 }
 \description{
-Strongly connected components
+Compute the strongly connected component (SCC) of each vertex and return a
+  DataFrame with each vertex assigned to the SCC containing that vertex.
 }

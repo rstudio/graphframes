@@ -4,15 +4,16 @@
 \alias{gf_bfs}
 \title{Breadth-first search (BFS)}
 \usage{
-gf_bfs(x, from, to, max_path_length = 10L, edge_filter = NULL, ...)
+gf_bfs(x, from_expr, to_expr, max_path_length = 10L, edge_filter = NULL,
+  ...)
 }
 \arguments{
 \item{x}{An object coercable to a GraphFrame (typically, a
 \code{gf_graphframe}).}
 
-\item{from}{Spark SQL expression specifying valid starting vertices for the BFS.}
+\item{from_expr}{Spark SQL expression specifying valid starting vertices for the BFS.}
 
-\item{to}{Spark SQL expression specifying valid target vertices for the BFS.}
+\item{to_expr}{Spark SQL expression specifying valid target vertices for the BFS.}
 
 \item{max_path_length}{Limit on the length of paths.}
 

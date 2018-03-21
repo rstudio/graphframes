@@ -10,10 +10,11 @@ gf_shortest_paths(x, landmarks, ...)
 \item{x}{An object coercable to a GraphFrame (typically, a
 \code{gf_graphframe}).}
 
-\item{landmarks}{IDs of landmark verticdes}
+\item{landmarks}{IDs of landmark vertices.}
 
 \item{...}{Optional arguments, currently not used.}
 }
 \description{
-Shortest paths
+Computes shortest paths from every vertex to the given set of landmark vertices.
+  Note that this takes edge direction into account.
 }

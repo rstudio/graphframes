@@ -2,13 +2,7 @@
 
 S3method(gf_register,graphframe)
 S3method(gf_register,spark_jobj)
-S3method(print,gf_algo_bfs)
-S3method(print,gf_algo_connected_components)
 S3method(print,gf_algo_lpa)
-S3method(print,gf_algo_pagerank)
-S3method(print,gf_algo_scc)
-S3method(print,gf_algo_shortest_paths)
-S3method(print,gf_algo_triangle_count)
 S3method(print,graphframe)
 S3method(summary,gf_algo)
 export(gf_algo)

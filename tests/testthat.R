@@ -1,4 +1,4 @@
 library(testthat)
-library(sparklygraphs)
+library(graphframes)
 
-test_check("sparklygraphs")
+test_check("graphframes")

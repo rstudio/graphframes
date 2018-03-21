@@ -2,8 +2,8 @@ spark_dependencies <- function(spark_version, scala_version, ...) {
   spark_dependency(
     jars = c(
       system.file(
-        sprintf("java/sparklygraphs-%s-%s.jar", spark_version, scala_version),
-        package = "sparklygraphs"
+        sprintf("java/graphframes-%s-%s.jar", spark_version, scala_version),
+        package = "graphframes"
       )
     ),
     packages = c(

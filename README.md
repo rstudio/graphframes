@@ -1,7 +1,5 @@
-sparklygraphs: R interface for GraphFrames
+R interface for GraphFrames
 ================
-
-[![Travis-CI Build Status](https://travis-ci.org/kevinykuo/sparklygraphs.svg?branch=master)](https://travis-ci.org/kevinykuo/sparklygraphs)
 
 -   Support for [GraphFrames](https://graphframes.github.io/) which aims to provide the functionality of [GraphX](http://spark.apache.org/graphx/).
 -   Perform graph algorithms like: [PageRank](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.PageRank), [ShortestPaths](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.ShortestPaths) and many [others](https://graphframes.github.io/api/scala/#package).
@@ -13,7 +11,7 @@ Installation
 For those already using `sparklyr` simply run:
 
 ``` r
-devtools::install_github("kevinykuo/sparklygraphs")
+devtools::install_github("rstudio/graphframes")
 ```
 
 Otherwise, install first `sparklyr` from CRAN using:
@@ -30,7 +28,7 @@ Getting Started
 We will calculate [PageRank](https://en.wikipedia.org/wiki/PageRank) over the `highschool` dataset as follows:
 
 ``` r
-library(sparklygraphs)
+library(graphframes)
 library(sparklyr)
 library(dplyr)
 
@@ -53,48 +51,14 @@ gf_graphframe(vertices_tbl, edges_tbl) %>%
   gf_pagerank(reset_prob = 0.15, max_iter = 10L, source_id = "1")
 ```
 
-    ## Call: gf_pagerank(., reset_prob = 0.15, max_iter = 10L, source_id = "1")
-    ## 
-    ## Algo parameters:
-    ##   Tolerance: 
-    ##   Reset probability: 0.15
-    ##   Max iterations: 10
-    ##   Source ID: 1
-    ## 
-    ## Result:
-    ## Vertices
-    ## # Source:   table<sparklyr_tmp_db8db93c13d> [?? x 2]
-    ## # Database: spark_connection
-    ##       id    pagerank
-    ##    <dbl>       <dbl>
-    ##  1    12 0.012169139
-    ##  2    12 0.012169139
-    ##  3    59 0.001151867
-    ##  4    59 0.001151867
-    ##  5     1 0.155808486
-    ##  6     1 0.155808486
-    ##  7    20 0.035269712
-    ##  8    20 0.035269712
-    ##  9    45 0.023715824
-    ## 10    45 0.023715824
-    ## # ... with 127 more rows
-    ## 
-    ## Edges
-    ## # Source:   table<sparklyr_tmp_db8d117391bb> [?? x 3]
-    ## # Database: spark_connection
-    ##      src   dst     weight
-    ##    <dbl> <dbl>      <dbl>
-    ##  1    13     6 0.02777778
-    ##  2    13     6 0.02777778
-    ##  3    13     6 0.02777778
-    ##  4    13     6 0.02777778
-    ##  5    13     6 0.02777778
-    ##  6    13     6 0.02777778
-    ##  7    13     6 0.02777778
-    ##  8    13     6 0.02777778
-    ##  9    13     6 0.02777778
-    ## 10    13     6 0.02777778
-    ## # ... with 1.245e+04 more rows
+    ## GraphFrame
+    ## Vertices:
+    ##   $ id       <dbl> 12, 12, 59, 59, 1, 1, 20, 20, 45, 45, 8, 8, 9, 9, 26,...
+    ##   $ pagerank <dbl> 1.216914e-02, 1.216914e-02, 1.151867e-03, 1.151867e-0...
+    ## Edges:
+    ##   $ src    <dbl> 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13,...
+    ##   $ dst    <dbl> 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 22, 22,...
+    ##   $ weight <dbl> 0.02777778, 0.02777778, 0.02777778, 0.02777778, 0.02777...
 
 Further Reading
 ---------------
@@ -113,23 +77,23 @@ For instance, one can calcualte the degrees of vertices using `gf_degrees` as fo
 gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
 ```
 
-    ## # Source:   table<sparklyr_tmp_db8d3702b9cb> [?? x 2]
+    ## # Source:   table<sparklyr_tmp_d36b125db28d> [?? x 2]
     ## # Database: spark_connection
     ##       id degree
     ##    <dbl>  <int>
-    ##  1    55     25
-    ##  2     6     10
-    ##  3    13     16
-    ##  4     7      6
-    ##  5    12     11
-    ##  6    63     21
-    ##  7    58      8
-    ##  8    41     19
-    ##  9    48     15
-    ## 10    59     11
-    ## # ... with 60 more rows
+    ##  1   55.     25
+    ##  2    6.     10
+    ##  3   13.     16
+    ##  4    7.      6
+    ##  5   12.     11
+    ##  6   63.     21
+    ##  7   58.      8
+    ##  8   41.     19
+    ##  9   48.     15
+    ## 10   59.     11
+    ## # ... with more rows
 
-In order to visualize large `sparklygraphs`, one can use `sample_n` and then use `ggraph` with `igraph` to visualize the graph as follows:
+In order to visualize large `graphframe`s, one can use `sample_n` and then use `ggraph` with `igraph` to visualize the graph as follows:
 
 ``` r
 library(ggraph)

@@ -1,5 +1,5 @@
 ---
-title: "sparklygraphs: R interface for GraphFrames"
+title: "R interface for GraphFrames"
 output:
   github_document:
     fig_width: 9
@@ -12,8 +12,6 @@ knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(fig.path = "tools/readme/", dev = "png")
 ```
 
-[![Travis-CI Build Status](https://travis-ci.org/kevinykuo/sparklygraphs.svg?branch=master)](https://travis-ci.org/kevinykuo/sparklygraphs)
-
 - Support for [GraphFrames](https://graphframes.github.io/) which aims to provide the functionality of [GraphX](http://spark.apache.org/graphx/).
 - Perform graph algorithms like: [PageRank](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.PageRank), [ShortestPaths](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.ShortestPaths) and many [others](https://graphframes.github.io/api/scala/#package).
 - Designed to work with [sparklyr](https://spark.rstudio.com) and the [sparklyr extensions](http://spark.rstudio.com/extensions.html).
@@ -23,7 +21,7 @@ knitr::opts_chunk$set(fig.path = "tools/readme/", dev = "png")
 For those already using `sparklyr` simply run:
 
 ```{r eval=FALSE}
-devtools::install_github("kevinykuo/sparklygraphs")
+devtools::install_github("rstudio/graphframes")
 ```
 
 Otherwise, install first `sparklyr` from CRAN using:
@@ -39,7 +37,7 @@ The examples make use of the `highschool` dataset from the `ggplot` package.
 We will calculate [PageRank](https://en.wikipedia.org/wiki/PageRank) over the `highschool` dataset as follows:
 
 ```{r message=FALSE}
-library(sparklygraphs)
+library(graphframes)
 library(sparklyr)
 library(dplyr)
 
@@ -78,7 +76,7 @@ For instance, one can calcualte the degrees of vertices using `gf_degrees` as fo
 gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
 ```
 
-In order to visualize large `sparklygraphs`, one can use `sample_n` and then use `ggraph` with `igraph` to visualize the graph as follows:
+In order to visualize large `graphframe`s, one can use `sample_n` and then use `ggraph` with `igraph` to visualize the graph as follows:
 
 ```{r message=FALSE}
 library(ggraph)

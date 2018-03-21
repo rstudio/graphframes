@@ -2,7 +2,6 @@
 
 S3method(gf_register,graphframe)
 S3method(gf_register,spark_jobj)
-S3method(print,gf_algo_lpa)
 S3method(print,graphframe)
 S3method(summary,gf_algo)
 export(gf_algo)

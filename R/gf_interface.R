@@ -12,7 +12,7 @@ spark_graphframe <- function(x, ...) {
 #' @template roxlate-gf-x
 #' @export
 spark_graphframe <- function(x, ...) {
-  x$graphframe
+  x$.jobj
 }
 
 new_graphframe <- function(jobj) {

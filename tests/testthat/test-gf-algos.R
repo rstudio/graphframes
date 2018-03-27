@@ -27,24 +27,24 @@ test_that("gf_find() works", {
 
 test_that("gf_connected_components() works", {
   spark_set_checkpoint_dir(sc, tempdir())
-  expect_known_output(
+  expect_identical(
     gf_friends(sc) %>%
       gf_connected_components() %>%
-      collect() %>%
-      arrange(id, name),
-    "output/gf_connected_components.txt",
-    print = TRUE
+      pull(component) %>%
+      unique() %>%
+      length(),
+    2L
   )
 })
 
 test_that("gf_scc() works", {
-  expect_known_output(
+  expect_identical(
     gf_friends(sc) %>%
       gf_scc(max_iter = 10) %>%
-      collect() %>%
-      arrange(id, name),
-    "output/gf_scc.txt",
-    print = TRUE
+      pull(component) %>%
+      unique() %>%
+      length(),
+    4L
   )
 })
 

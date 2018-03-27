@@ -1,0 +1,6 @@
+Observations: 2
+Variables: 4
+$ a  <list> [["b", "Bob", 36], ["c", "Charlie", 30]]
+$ e  <list> [["b", "c", "follow"], ["c", "b", "follow"]]
+$ b  <list> [["c", "Charlie", 30], ["b", "Bob", 36]]
+$ e2 <list> [["c", "b", "follow"], ["b", "c", "follow"]]

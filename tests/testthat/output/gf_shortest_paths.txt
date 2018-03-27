@@ -1,0 +1,10 @@
+# A tibble: 7 x 4
+  id    name      age distances 
+  <chr> <chr>   <int> <list>    
+1 f     Fanny      36 <list [0]>
+2 b     Bob        36 <list [0]>
+3 g     Gabby      60 <list [0]>
+4 a     Alice      34 <list [2]>
+5 d     David      29 <list [2]>
+6 e     Esther     32 <list [2]>
+7 c     Charlie    30 <list [0]>

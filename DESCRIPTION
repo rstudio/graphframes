@@ -13,5 +13,6 @@ RoxygenNote: 6.0.1.9000
 Imports:
     sparklyr,
     tibble
-Suggests:
-    testthat
+Suggests: 
+    testthat,
+    covr

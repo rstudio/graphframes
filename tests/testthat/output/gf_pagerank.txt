@@ -1,0 +1,11 @@
+GraphFrame
+Vertices:
+  $ id       <chr> "f", "b", "g", "a", "d", "e", "c"
+  $ name     <chr> "Fanny", "Bob", "Gabby", "Alice", "David", "Esther", "Char...
+  $ age      <int> 36, 36, 60, 34, 29, 32, 30
+  $ pagerank <dbl> 0.2736611, 2.2131428, 0.1500000, 0.3742924, 0.2736611, 0.3...
+Edges:
+  $ src          <chr> "b", "c", "d", "e", "a", "a", "e", "f"
+  $ dst          <chr> "c", "b", "a", "f", "e", "b", "d", "c"
+  $ relationship <chr> "follow", "follow", "friend", "follow", "friend", "fri...
+  $ weight       <dbl> 1.0, 1.0, 1.0, 0.5, 0.5, 0.5, 0.5, 1.0

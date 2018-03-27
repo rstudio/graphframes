@@ -1,4 +1,4 @@
-Observations: ??
+Observations: 2
 Variables: 4
 $ a  <list> [["b", "Bob", 36], ["c", "Charlie", 30]]
 $ e  <list> [["b", "c", "follow"], ["c", "b", "follow"]]

@@ -1,0 +1,10 @@
+# A tibble: 7 x 4
+  id    name      age    component
+  <chr> <chr>   <int>        <dbl>
+1 f     Fanny      36           0.
+2 b     Bob        36  8589934592.
+3 g     Gabby      60  8589934593.
+4 a     Alice      34 17179869184.
+5 d     David      29 17179869184.
+6 e     Esther     32 17179869184.
+7 c     Charlie    30  8589934592.

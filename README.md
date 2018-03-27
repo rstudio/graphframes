@@ -1,7 +1,7 @@
 R interface for GraphFrames
 ================
 
-[![Build Status](https://travis-ci.org/rstudio/graphframes.svg?branch=master)](https://travis-ci.org/rstudio/graphframes)
+[![Build Status](https://travis-ci.org/rstudio/graphframes.svg?branch=master)](https://travis-ci.org/rstudio/graphframes) [![Coverage status](https://codecov.io/gh/rstudio/graphframes/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/graphframes?branch=master)
 
 -   Support for [GraphFrames](https://graphframes.github.io/) which aims to provide the functionality of [GraphX](http://spark.apache.org/graphx/).
 -   Perform graph algorithms like: [PageRank](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.PageRank), [ShortestPaths](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.ShortestPaths) and many [others](https://graphframes.github.io/api/scala/#package).
@@ -79,7 +79,7 @@ For instance, one can calcualte the degrees of vertices using `gf_degrees` as fo
 gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
 ```
 
-    ## # Source:   table<sparklyr_tmp_16ba6759715ca> [?? x 2]
+    ## # Source:   table<sparklyr_tmp_16dc314afea5c> [?? x 2]
     ## # Database: spark_connection
     ##       id degree
     ##    <dbl>  <int>

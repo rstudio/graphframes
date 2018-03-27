@@ -1,0 +1,5 @@
+Observations: ??
+Variables: 3
+$ from <list> [["e", "Esther", 32]]
+$ e0   <list> [["e", "d", "friend"]]
+$ to   <list> [["d", "David", 29]]

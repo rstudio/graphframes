@@ -30,7 +30,8 @@ test_that("gf_connected_components() works", {
   expect_known_output(
     gf_friends(sc) %>%
       gf_connected_components() %>%
-      collect(),
+      collect() %>%
+      arrange(id, name),
     "output/gf_connected_components.txt",
     print = TRUE
   )
@@ -40,7 +41,8 @@ test_that("gf_scc() works", {
   expect_known_output(
     gf_friends(sc) %>%
       gf_scc(max_iter = 10) %>%
-      collect(),
+      collect() %>%
+      arrange(id, name),
     "output/gf_scc.txt",
     print = TRUE
   )
@@ -49,7 +51,10 @@ test_that("gf_scc() works", {
 test_that("gf_pagerank() works", {
   expect_known_output(
     gf_friends(sc) %>%
-      gf_pagerank(reset_probability = 0.15, tol = 0.01),
+      gf_pagerank(reset_probability = 0.15, tol = 0.01) %>%
+      gf_vertices() %>%
+      collect() %>%
+      arrange(id, name),
     "output/gf_pagerank.txt",
     print = TRUE
   )
@@ -59,7 +64,8 @@ test_that("gf_shortest_paths() works", {
   expect_known_output(
     gf_friends(sc) %>%
       gf_shortest_paths(landmarks = c("a", "d")) %>%
-      collect(),
+      collect() %>%
+      arrange(id, name),
     "output/gf_shortest_paths.txt",
     print = TRUE
   )
@@ -69,7 +75,8 @@ test_that("gf_triangle_count() works", {
   expect_known_output(
     gf_friends(sc) %>%
       gf_triangle_count() %>%
-      collect(),
+      collect() %>%
+      arrange(id, name),
     "output/gf_triangle_count.txt",
     print = TRUE
   )

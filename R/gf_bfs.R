@@ -15,8 +15,8 @@ gf_bfs <- function(x,
                    max_path_length = 10L,
                    edge_filter = NULL, ...) {
 
-  from <- ensure_scalar_character(from)
-  to <- ensure_scalar_character(to)
+  from_expr <- ensure_scalar_character(from_expr)
+  to_expr <- ensure_scalar_character(to_expr)
   max_path_length <- ensure_scalar_integer(max_path_length)
   edge_filter <- ensure_scalar_character(edge_filter, allow.null = TRUE)
 

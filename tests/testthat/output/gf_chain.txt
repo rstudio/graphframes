@@ -1,0 +1,6 @@
+GraphFrame
+Vertices:
+  $ id <dbl> 0, 1, 2, 3, 4
+Edges:
+  $ src <dbl> 0, 1, 2, 3
+  $ dst <dbl> 1, 2, 3, 4

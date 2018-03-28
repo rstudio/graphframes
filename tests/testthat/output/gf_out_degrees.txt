@@ -1,0 +1,9 @@
+# A tibble: 6 x 2
+  id    outDegree
+  <chr>     <int>
+1 a             2
+2 b             1
+3 c             1
+4 d             1
+5 e             2
+6 f             1

@@ -1,0 +1,9 @@
+GraphFrame
+Vertices:
+  $ id   <chr> "a", "b", "c", "d", "e", "f", "g"
+  $ name <chr> "Alice", "Bob", "Charlie", "David", "Esther", "Fanny", "Gabby"
+  $ age  <int> 34, 36, 30, 29, 32, 36, 60
+Edges:
+  $ src          <chr> "a", "b", "c", "f", "e", "e", "d", "a"
+  $ dst          <chr> "b", "c", "b", "c", "f", "d", "a", "e"
+  $ relationship <chr> "friend", "follow", "follow", "follow", "follow", "fri...

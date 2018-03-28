@@ -7,13 +7,6 @@
 testthat_spark_connection <- function() {
   version <- Sys.getenv("SPARK_VERSION", unset = "2.1.0")
 
-  if (exists(".testthat_livy_connection", envir = .GlobalEnv)) {
-    spark_disconnect_all()
-    Sys.sleep(3)
-    livy_service_stop()
-    remove(".testthat_livy_connection", envir = .GlobalEnv)
-  }
-
   spark_installed <- spark_installed_versions()
   if (nrow(spark_installed[spark_installed$spark == version, ]) == 0) {
     options(sparkinstall.verbose = TRUE)
@@ -37,7 +30,6 @@ testthat_spark_connection <- function() {
     options(sparklyr.na.omit.verbose = TRUE)
     options(sparklyr.na.action.verbose = TRUE)
 
-    setwd(tempdir())
     sc <- spark_connect(master = "local", version = version, config = config)
     assign(".testthat_spark_connection", sc, envir = .GlobalEnv)
   }

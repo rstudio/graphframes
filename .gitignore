@@ -5,3 +5,4 @@
 demo.R
 derby.log
 log4j.spark.*
+internal

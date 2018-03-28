@@ -82,3 +82,13 @@ test_that("gf_triangle_count() works", {
   )
 })
 
+test_that("gf_lpa() works", {
+  lpa_result <- gf_friends(sc) %>%
+    gf_lpa(max_iter = 5) %>%
+    collect()
+  expect_identical(dim(lpa_result),
+                   c(7L, 4L))
+  expect_identical(names(lpa_result),
+                   c("id", "name", "age", "label"))
+})
+

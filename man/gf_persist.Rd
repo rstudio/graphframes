@@ -4,13 +4,13 @@
 \alias{gf_persist}
 \title{Persist the GraphFrame}
 \usage{
-gf_persist(x, storage.level = "MEMORY_AND_DISK")
+gf_persist(x, storage_level = "MEMORY_AND_DISK")
 }
 \arguments{
 \item{x}{An object coercable to a GraphFrame (typically, a
 \code{gf_graphframe}).}
 
-\item{storage.level}{The storage level to be used. Please view the
+\item{storage_level}{The storage level to be used. Please view the
 \href{http://spark.apache.org/docs/latest/programming-guide.html#rdd-persistence}{Spark Documentation}
 for information on what storage levels are accepted.}
 }

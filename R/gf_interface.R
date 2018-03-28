@@ -192,24 +192,31 @@ gf_find <- function(x, pattern) {
 gf_cache <- function(x) {
   x %>%
     spark_graphframe() %>%
-    invoke("cache")
+    invoke("cache") %>%
+    gf_register()
 }
 
 #' Persist the GraphFrame
 #'
 #' @template roxlate-gf-x
 #'
-#' @param storage.level The storage level to be used. Please view the
+#' @param storage_level The storage level to be used. Please view the
 #'   \href{http://spark.apache.org/docs/latest/programming-guide.html#rdd-persistence}{Spark Documentation}
 #'   for information on what storage levels are accepted.
 #'
 #' @export
-gf_persist <- function(x, storage.level = "MEMORY_AND_DISK") {
-  ensure_scalar_character(storage.level)
+gf_persist <- function(x, storage_level = "MEMORY_AND_DISK") {
+  ensure_scalar_character(storage_level)
+  gf <- spark_graphframe(x)
+  storage_level <- invoke_static(
+    spark_connection(gf),
+    "org.apache.spark.storage.StorageLevel",
+    storage_level
+  )
 
-  x %>%
-    spark_graphframe() %>%
-    invoke("persist", storage.level)
+  gf %>%
+    invoke("persist", storage_level) %>%
+    gf_register()
 }
 
 #' Unpersist the GraphFrame
@@ -224,6 +231,7 @@ gf_unpersist <- function(x, blocking = FALSE) {
 
   x %>%
     spark_graphframe() %>%
-    invoke("unpersist", blocking)
+    invoke("unpersist", blocking) %>%
+    gf_register()
 }
 

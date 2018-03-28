@@ -74,6 +74,7 @@ gf_star <- function(sc, n) {
 #'   connected by a single edge (0->n).
 #' @template roxlate-gf-sc
 #' @param blob_size The size of each blob.
+#' @export
 gf_two_blobs <- function(sc, blob_size) {
   blob_size <- ensure_scalar_integer(blob_size)
 

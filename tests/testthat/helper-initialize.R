@@ -1,3 +1,7 @@
+"%||%" <- function(x, y) {
+  if (is.null(x)) y else x
+}
+
 # helper functions from sparklyr tests
 # https://github.com/rstudio/sparklyr/blob/master/tests/testthat/helper-initialize.R
 testthat_spark_connection <- function(version = NULL) {

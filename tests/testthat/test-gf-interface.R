@@ -1,4 +1,4 @@
-context("gf_interface")
+context("gf interface")
 
 sc <- testthat_spark_connection()
 test_requires("dplyr")
@@ -32,4 +32,58 @@ test_that("construction from edge frame works", {
     unique()
 
   expect_true(setequal(ids_from_vertices, ids_from_edges))
+})
+
+test_that("printing graphframes", {
+  expect_known_output(gf_friends(sc),
+                      "output/friends.txt",
+                      print = TRUE)
+})
+
+test_that("gf_triplets() works", {
+  expect_known_output(
+    gf_friends(sc) %>%
+      gf_triplets() %>%
+      collect() %>%
+      glimpse(),
+    "output/triplets.txt",
+    print = TRUE,)
+})
+
+test_that("gf_vertex_columns() works", {
+  expect_identical(
+    gf_friends(sc) %>%
+      gf_vertex_columns(),
+    c("id", "name", "age")
+  )
+})
+
+test_that("gf_edge_columns() works", {
+  expect_identical(
+    gf_friends(sc) %>%
+      gf_edge_columns(),
+    c("src", "dst", "relationship")
+  )
+})
+
+test_that("gf_out_degrees() works", {
+  expect_known_output(
+    gf_friends(sc) %>%
+      gf_out_degrees() %>%
+      collect() %>%
+      arrange(id),
+    "output/gf_out_degrees.txt",
+    print = TRUE
+  )
+})
+
+test_that("gf_degrees() works", {
+  expect_known_output(
+    gf_friends(sc) %>%
+      gf_degrees() %>%
+      collect() %>%
+      arrange(id),
+    "output/gf_degrees.txt",
+    print = TRUE
+  )
 })

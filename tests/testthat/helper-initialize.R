@@ -4,19 +4,41 @@
 
 # helper functions from sparklyr tests
 # https://github.com/rstudio/sparklyr/blob/master/tests/testthat/helper-initialize.R
-testthat_spark_connection <- function(version = NULL) {
+testthat_spark_connection <- function() {
+  version <- Sys.getenv("SPARK_VERSION", unset = "2.1.0")
+
+  if (exists(".testthat_livy_connection", envir = .GlobalEnv)) {
+    spark_disconnect_all()
+    Sys.sleep(3)
+    livy_service_stop()
+    remove(".testthat_livy_connection", envir = .GlobalEnv)
+  }
+
+  spark_installed <- spark_installed_versions()
+  if (nrow(spark_installed[spark_installed$spark == version, ]) == 0) {
+    options(sparkinstall.verbose = TRUE)
+    spark_install(version)
+  }
+
+  expect_gt(nrow(spark_installed_versions()), 0)
 
   # generate connection if none yet exists
   connected <- FALSE
   if (exists(".testthat_spark_connection", envir = .GlobalEnv)) {
     sc <- get(".testthat_spark_connection", envir = .GlobalEnv)
-    connected <- sparklyr::connection_is_open(sc)
+    connected <- connection_is_open(sc)
   }
 
   if (!connected) {
-    version <- version %||% Sys.getenv("SPARK_VERSION", unset = "2.1.0")
+    config <- spark_config()
+
+    options(sparklyr.sanitize.column.names.verbose = TRUE)
+    options(sparklyr.verbose = TRUE)
+    options(sparklyr.na.omit.verbose = TRUE)
+    options(sparklyr.na.action.verbose = TRUE)
+
     setwd(tempdir())
-    sc <- sparklyr::spark_connect(master = "local", version = version)
+    sc <- spark_connect(master = "local", version = version, config = config)
     assign(".testthat_spark_connection", sc, envir = .GlobalEnv)
   }
 
@@ -52,11 +74,3 @@ test_requires <- function(...) {
 
   invisible(TRUE)
 }
-
-sc <- tryCatch(
-  testthat_spark_connection(version = "2.0.0"),
-  error = function(e) {
-    sparklyr::spark_install(version = "2.0.0")
-    testthat_spark_connection(version = "2.0.0")
-  }
-)

@@ -8,6 +8,7 @@
 ^configure\.win$
 ^configure\.R$
 ^examples/
+^logs
 ^demo\.R$
 ^docs/
 ^internal/

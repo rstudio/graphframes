@@ -1,6 +1,6 @@
 Package: graphframes
 Type: Package
-Title: R Interface tor GraphFrames
+Title: R Interface for GraphFrames
 Version: 0.1.0
 Authors@R: person("Kevin", "Kuo", email = "kevin.kuo@rstudio.com", role = c("aut", "cre"))
 Maintainer: Kevin Kuo <kevin.kuo@rstudio.com>

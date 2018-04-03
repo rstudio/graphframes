@@ -24,3 +24,9 @@ gf_bfs(x, from_expr, to_expr, max_path_length = 10L, edge_filter = NULL,
 \description{
 Breadth-first search (BFS)
 }
+\examples{
+\dontrun{
+g <- gf_friends(sc)
+gf_bfs(g, from_expr = "name = 'Esther'", to_expr = "age < 32")
+}
+}

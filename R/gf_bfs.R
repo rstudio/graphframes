@@ -8,6 +8,11 @@
 #' @param edge_filter Spark SQL expression specifying edges which may be used in the search.
 #' @template roxlate-gf-dots
 #'
+#' @examples
+#' \dontrun{
+#' g <- gf_friends(sc)
+#' gf_bfs(g, from_expr = "name = 'Esther'", to_expr = "age < 32")
+#' }
 #' @export
 gf_bfs <- function(x,
                    from_expr,

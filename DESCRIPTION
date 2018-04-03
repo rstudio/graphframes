@@ -1,11 +1,14 @@
 Package: graphframes
 Type: Package
-Title: R Interface for GraphFrames
+Title: Interface for GraphFrames
 Version: 0.1.0
 Authors@R: person("Kevin", "Kuo", email = "kevin.kuo@rstudio.com", role = c("aut", "cre"))
 Maintainer: Kevin Kuo <kevin.kuo@rstudio.com>
 Description: A sparklyr <https://spark.rstudio.com/> extension that provides an R 
-  interface for GraphFrames <https://graphframes.github.io/>.
+  interface for 'GraphFrames' <https://graphframes.github.io/>. 'GraphFrames' is a package
+  for 'Apache Spark' that provides a DataFrame-based API for working with graphs. Functionality
+  includes motif finding and common graph algorithms, such as PageRank and Breadth-first
+  search.
 License: Apache License 2.0 | file LICENSE
 Encoding: UTF-8
 LazyData: true

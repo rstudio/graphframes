@@ -6,6 +6,12 @@
 #' @template roxlate-gf-x
 #' @param landmarks IDs of landmark vertices.
 #' @template roxlate-gf-dots
+#'
+#' @examples
+#' \dontrun{
+#' g <- gf_friends(sc)
+#' gf_shortest_paths(g, landmarks = c("a", "d"))
+#' }
 #' @export
 gf_shortest_paths <- function(x, landmarks, ...) {
   landmarks <- lapply(landmarks, ensure_scalar_character)

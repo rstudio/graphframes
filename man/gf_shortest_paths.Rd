@@ -18,3 +18,9 @@ gf_shortest_paths(x, landmarks, ...)
 Computes shortest paths from every vertex to the given set of landmark vertices.
   Note that this takes edge direction into account.
 }
+\examples{
+\dontrun{
+g <- gf_friends(sc)
+gf_shortest_paths(g, landmarks = c("a", "d"))
+}
+}

@@ -5,6 +5,12 @@
 #'
 #' @template roxlate-gf-x
 #' @template roxlate-gf-dots
+#'
+#' @examples
+#' \dontrun{
+#' g <- gf_friends(sc)
+#' gf_triangle_count(g)
+#' }
 #' @export
 gf_triangle_count <- function(x, ...) {
   gf <- spark_graphframe(x)

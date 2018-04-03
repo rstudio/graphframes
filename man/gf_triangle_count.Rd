@@ -16,3 +16,9 @@ gf_triangle_count(x, ...)
 This algorithm ignores edge direction; i.e., all edges are treated
   as undirected. In a multigraph, duplicate edges will be counted only once.
 }
+\examples{
+\dontrun{
+g <- gf_friends(sc)
+gf_triangle_count(g)
+}
+}

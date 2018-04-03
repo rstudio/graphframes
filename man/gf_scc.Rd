@@ -18,3 +18,9 @@ gf_scc(x, max_iter, ...)
 Compute the strongly connected component (SCC) of each vertex and return a
   DataFrame with each vertex assigned to the SCC containing that vertex.
 }
+\examples{
+\dontrun{
+g <- gf_friends(sc)
+gf_scc(g, max_iter = 10)
+}
+}

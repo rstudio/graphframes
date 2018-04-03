@@ -6,6 +6,12 @@
 #' @param max_iter Maximum number of iterations.
 #' @param source_id (Optional) Source vertex for a personalized pagerank.
 #' @template roxlate-gf-dots
+#'
+#' @examples
+#' \dontrun{
+#' g <- gf_friends(sc)
+#' gf_pagerank(g, reset_probability = 0.15, tol = 0.01)
+#' }
 #' @export
 gf_pagerank <- function(x, tol = NULL, reset_probability = 0.15, max_iter = NULL,
                         source_id = NULL, ...) {

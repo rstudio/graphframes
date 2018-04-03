@@ -8,6 +8,13 @@
 #' @param algorithm One of 'graphframes' or 'graphx'.
 #' @param checkpoint_interval Checkpoint interval in terms of number of iterations.
 #' @template roxlate-gf-dots
+#' @examples
+#' \dontrun{
+#' # checkpoint directory is required for gf_connected_components()
+#' spark_set_checkpoint_dir(sc, tempdir())
+#' g <- gf_friends(sc)
+#' gf_connected_components(g)
+#' }
 #' @export
 gf_connected_components <- function(x,
                                     broadcast_threshold = 1000000L,

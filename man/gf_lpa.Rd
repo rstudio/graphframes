@@ -23,3 +23,9 @@ Run static Label Propagation for detecting communities in networks. Each node in
   computationally, although (1) convergence is not guaranteed and (2) one can
   end up with trivial solutions (all nodes are identified into a single community).
 }
+\examples{
+\dontrun{
+g <- gf_friends(sc)
+gf_lpa(g, max_iter = 5)
+}
+}

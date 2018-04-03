@@ -12,3 +12,10 @@ gf_friends(sc)
 \description{
 Graph of friends in a social network.
 }
+\examples{
+\dontrun{
+library(sparklyr)
+sc <- spark_connect(master = "local")
+gf_friends(sc)
+}
+}

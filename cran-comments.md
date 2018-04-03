@@ -1,3 +1,10 @@
+## Resubmission
+
+This is a resubmission. Changes:
+
+- In DESCRIPTION, added more details, added single quotes for software/package names, removed redundant R in Title, and added URL to package repo.
+- Added various short examples in function documentation throughout package.
+
 ## Test environments
 * local OS X install, R 3.4.4
 * ubuntu 14.04 (on travis-ci), R 3.4.4
@@ -9,8 +16,3 @@ There were no ERRORs or WARNINGs.
 There was 1 NOTE:
 
 * New submission
-* Possibly mis-spelled words in DESCRIPTION:
-  GraphFrames (3:24, 8:17)
-  sparklyr (7:16)
-  
-This is a new submission. Spelling is correct.

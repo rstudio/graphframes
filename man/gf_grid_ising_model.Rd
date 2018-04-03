@@ -33,3 +33,8 @@ This method generates a grid Ising model with random parameters. Ising models
 
    \deqn{P(X) = (1/Z) * exp[ \sum_i a_i x_i + \sum_{ij} b_{ij} x_i x_j ]}
 }
+\examples{
+\dontrun{
+gf_grid_ising_model(sc, 5)
+}
+}

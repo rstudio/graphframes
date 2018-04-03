@@ -20,6 +20,10 @@ gf_friends <- function(sc) {
 #'   The vertex IDs are 0, 1, ..., n-1, and the edges are (0, 1), (1, 2), ...., (n-2, n-1).
 #' @template roxlate-gf-sc
 #' @param n Size of the graph to return.
+#' @examples
+#' \dontrun{
+#' gf_chain(sc, 5)
+#' }
 #' @export
 gf_chain <- function(sc, n) {
   n <- ensure_scalar_integer(n)
@@ -47,6 +51,11 @@ gf_chain <- function(sc, n) {
 #'   "dst", and "b". Edges are directed, but they should be treated as undirected in
 #'    any algorithms run on this model. Vertex IDs are of the form "i,j". E.g., vertex
 #'    "1,3" is in the second row and fourth column of the grid.
+#'
+#' @examples
+#' \dontrun{
+#' gf_grid_ising_model(sc, 5)
+#' }
 #' @export
 gf_grid_ising_model <- function(sc, n, v_std = 1, e_std = 1) {
   sql_context <- invoke_new(sc, "org.apache.spark.sql.SQLContext", spark_context(sc))
@@ -65,6 +74,11 @@ gf_grid_ising_model <- function(sc, n, v_std = 1, e_std = 1) {
 #'    indexed 0 (the root) and the n other leaf vertices 1, 2, ..., n.
 #' @template roxlate-gf-sc
 #' @param n The number of leaves.
+#'
+#' @examples
+#' \dontrun{
+#' gf_star(sc, 5)
+#' }
 #' @export
 gf_star <- function(sc, n) {
   n <- ensure_scalar_integer(n)
@@ -80,6 +94,11 @@ gf_star <- function(sc, n) {
 #'   connected by a single edge (0->n).
 #' @template roxlate-gf-sc
 #' @param blob_size The size of each blob.
+#'
+#' @examples
+#' \dontrun{
+#' gf_two_blobs(sc, 3)
+#' }
 #' @export
 gf_two_blobs <- function(sc, blob_size) {
   blob_size <- ensure_scalar_integer(blob_size)

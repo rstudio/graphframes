@@ -34,6 +34,21 @@ new_graphframe <- function(jobj) {
 #'
 #' @param vertices A \code{tbl_spark} representing vertices.
 #' @param edges A \code{tbl_psark} representing edges.
+#'
+#' @examples
+#' \dontrun{
+#' library(sparklyr)
+#' sc <- spark_connect(master = "local", version = "2.1.0")
+#' v_tbl <- sdf_copy_to(
+#'   sc, data.frame(id = 1:3, name = LETTERS[1:3])
+#' )
+#' e_tbl <- sdf_copy_to(
+#'   sc, data.frame(src = c(1, 2, 2), dst = c(2, 1, 3),
+#'                  action = c("love", "hate", "follow"))
+#' )
+#' gf_graphframe(v_tbl, e_tbl)
+#' gf_graphframe(edges = e_tbl)
+#' }
 #' @export
 gf_graphframe <- function(vertices = NULL, edges) {
   sc <- edges %>%
@@ -170,10 +185,25 @@ gf_degrees <- function(x) {
 }
 
 #' Motif finding: Searching the graph for structural patterns
+#'
+#' Motif finding uses a simple Domain-Specific Language (DSL) for
+#'  expressing structural queries. For example,
+#'  gf_find(g, "(a)-[e]->(b); (b)-[e2]->(a)") will search for
+#'  pairs of vertices a,b connected by edges in both directions.
+#'  It will return a DataFrame of all such structures in the graph,
+#'  with columns for each of the named elements (vertices or edges)
+#'  in the motif. In this case, the returned columns will be in
+#'  order of the pattern: "a, e, b, e2."
+#'
 #' @template roxlate-gf-x
 #'
 #' @param pattern pattern specifying a motif to search for
 #'
+#' @examples
+#' \dontrun{
+#' gf_friends(sc) %>%
+#'   gf_find("(a)-[e]->(b); (b)-[e2]->(a)")
+#' }
 #' @export
 gf_find <- function(x, pattern) {
   ensure_scalar_character(pattern)

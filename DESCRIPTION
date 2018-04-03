@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: person("Kevin", "Kuo", email = "kevin.kuo@rstudio.com", 
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7803-7901"))
 Maintainer: Kevin Kuo <kevin.kuo@rstudio.com>
-Description: A sparklyr <https://spark.rstudio.com/> extension that provides an R 
+Description: A 'sparklyr' <https://spark.rstudio.com/> extension that provides an R 
   interface for 'GraphFrames' <https://graphframes.github.io/>. 'GraphFrames' is a package
   for 'Apache Spark' that provides a DataFrame-based API for working with graphs. Functionality
   includes motif finding and common graph algorithms, such as PageRank and Breadth-first

@@ -2,8 +2,7 @@
 
 This is a resubmission. Changes:
 
-- In DESCRIPTION, added more details, added single quotes for software/package names, removed redundant R in Title, and added URL to package repo.
-- Added various short examples in function documentation throughout package.
+- Enclose 'GraphFrames' in single quotes in the title.
 
 ## Test environments
 * local OS X install, R 3.4.4

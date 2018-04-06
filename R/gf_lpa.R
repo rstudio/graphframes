@@ -11,6 +11,12 @@
 #' @template roxlate-gf-x
 #' @param max_iter Maximum number of iterations.
 #' @template roxlate-gf-dots
+#'
+#' @examples
+#' \dontrun{
+#' g <- gf_friends(sc)
+#' gf_lpa(g, max_iter = 5)
+#' }
 #' @export
 gf_lpa <- function(x, max_iter, ...) {
   max_iter <- ensure_scalar_integer(max_iter)

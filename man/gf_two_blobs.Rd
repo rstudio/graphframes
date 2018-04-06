@@ -15,3 +15,8 @@ gf_two_blobs(sc, blob_size)
 Two densely connected blobs (vertices 0->n-1 and n->2n-1)
   connected by a single edge (0->n).
 }
+\examples{
+\dontrun{
+gf_two_blobs(sc, 3)
+}
+}

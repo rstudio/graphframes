@@ -15,3 +15,8 @@ gf_chain(sc, n)
 Returns a chain graph of the given size with Long ID type.
   The vertex IDs are 0, 1, ..., n-1, and the edges are (0, 1), (1, 2), ...., (n-2, n-1).
 }
+\examples{
+\dontrun{
+gf_chain(sc, 5)
+}
+}

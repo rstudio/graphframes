@@ -13,7 +13,9 @@ Installation
 For those already using `sparklyr` simply run:
 
 ``` r
-devtools::install_github("rstudio/graphframes")
+install.packages("graphframes")
+# or, for the development version,
+# devtools::install_github("rstudio/graphframes")
 ```
 
 Otherwise, install first `sparklyr` from CRAN using:
@@ -79,7 +81,7 @@ For instance, one can calcualte the degrees of vertices using `gf_degrees` as fo
 gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
 ```
 
-    ## # Source:   table<sparklyr_tmp_16dc314afea5c> [?? x 2]
+    ## # Source:   table<sparklyr_tmp_e0776727325e> [?? x 2]
     ## # Database: spark_connection
     ##       id degree
     ##    <dbl>  <int>

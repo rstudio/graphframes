@@ -15,3 +15,8 @@ gf_star(sc, n)
 Returns a star graph with Long ID type, consisting of a central element
    indexed 0 (the root) and the n other leaf vertices 1, 2, ..., n.
 }
+\examples{
+\dontrun{
+gf_star(sc, 5)
+}
+}

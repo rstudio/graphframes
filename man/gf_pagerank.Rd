@@ -24,3 +24,9 @@ gf_pagerank(x, tol = NULL, reset_probability = 0.15, max_iter = NULL,
 \description{
 PageRank
 }
+\examples{
+\dontrun{
+g <- gf_friends(sc)
+gf_pagerank(g, reset_probability = 0.15, tol = 0.01)
+}
+}

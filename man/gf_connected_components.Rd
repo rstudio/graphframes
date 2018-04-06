@@ -23,3 +23,11 @@ gf_connected_components(x, broadcast_threshold = 1000000L,
 Computes the connected component membership of each vertex and returns a DataFrame
    of vertex information with each vertex assigned a component ID.
 }
+\examples{
+\dontrun{
+# checkpoint directory is required for gf_connected_components()
+spark_set_checkpoint_dir(sc, tempdir())
+g <- gf_friends(sc)
+gf_connected_components(g)
+}
+}

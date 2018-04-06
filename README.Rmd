@@ -12,7 +12,7 @@ knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(fig.path = "tools/readme/", dev = "png")
 ```
 
-[![Build Status](https://travis-ci.org/rstudio/graphframes.svg?branch=master)](https://travis-ci.org/rstudio/graphframes) [![Coverage status](https://codecov.io/gh/rstudio/graphframes/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/graphframes?branch=master)
+[![Build Status](https://travis-ci.org/rstudio/graphframes.svg?branch=master)](https://travis-ci.org/rstudio/graphframes) [![Coverage status](https://codecov.io/gh/rstudio/graphframes/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/graphframes?branch=master) [![CRAN status](https://www.r-pkg.org/badges/version/graphframes)](https://cran.r-project.org/package=graphframes)
 
 - Support for [GraphFrames](https://graphframes.github.io/) which aims to provide the functionality of [GraphX](http://spark.apache.org/graphx/).
 - Perform graph algorithms like: [PageRank](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.PageRank), [ShortestPaths](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.ShortestPaths) and many [others](https://graphframes.github.io/api/scala/#package).

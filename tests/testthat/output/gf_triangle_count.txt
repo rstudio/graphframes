@@ -1,10 +1,10 @@
 # A tibble: 7 x 4
   count id    name      age
   <dbl> <chr> <chr>   <int>
-1    1. a     Alice      34
-2    0. b     Bob        36
-3    0. c     Charlie    30
-4    1. d     David      29
-5    1. e     Esther     32
-6    0. f     Fanny      36
-7    0. g     Gabby      60
+1     1 a     Alice      34
+2     0 b     Bob        36
+3     0 c     Charlie    30
+4     1 d     David      29
+5     1 e     Esther     32
+6     0 f     Fanny      36
+7     0 g     Gabby      60

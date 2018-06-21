@@ -7,4 +7,4 @@
 4 d     David      29    0.274
 5 e     Esther     32    0.309
 6 f     Fanny      36    0.274
-7 g     Gabby      60    0.150
+7 g     Gabby      60    0.15 

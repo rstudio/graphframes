@@ -15,10 +15,10 @@
 #' @export
 gf_pagerank <- function(x, tol = NULL, reset_probability = 0.15, max_iter = NULL,
                         source_id = NULL, ...) {
-  tol <- ensure_scalar_double(tol, allow.null = TRUE)
-  reset_probability <- ensure_scalar_double(reset_probability)
-  max_iter <- ensure_scalar_integer(max_iter, allow.null = TRUE)
-  source_id <- ensure_scalar_character(source_id, allow.null = TRUE)
+  tol <- cast_nullable_scalar_double(tol)
+  reset_probability <- cast_scalar_double(reset_probability)
+  max_iter <- cast_nullable_scalar_integer(max_iter)
+  source_id <- cast_nullable_string(source_id)
 
   gf <- spark_graphframe(x)
 

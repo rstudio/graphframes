@@ -19,7 +19,7 @@
 #' }
 #' @export
 gf_lpa <- function(x, max_iter, ...) {
-  max_iter <- ensure_scalar_integer(max_iter)
+  max_iter <- cast_scalar_integer(max_iter)
 
   gf <- spark_graphframe(x)
 

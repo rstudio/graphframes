@@ -5,7 +5,8 @@
 \title{Connected components}
 \usage{
 gf_connected_components(x, broadcast_threshold = 1000000L,
-  algorithm = c("graphframes", "graphx"), checkpoint_interval = 2L, ...)
+  algorithm = c("graphframes", "graphx"), checkpoint_interval = 2L,
+  ...)
 }
 \arguments{
 \item{x}{An object coercable to a GraphFrame (typically, a

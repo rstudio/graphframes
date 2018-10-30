@@ -2,7 +2,6 @@
 % Please edit documentation in R/gf_interface.R
 \name{spark_graphframe}
 \alias{spark_graphframe}
-\alias{spark_graphframe}
 \title{Retrieve a GraphFrame}
 \usage{
 spark_graphframe(x, ...)

@@ -17,7 +17,7 @@ Create a new GraphFrame
 \examples{
 \dontrun{
 library(sparklyr)
-sc <- spark_connect(master = "local", version = "2.1.0")
+sc <- spark_connect(master = "local", version = "2.3.0")
 v_tbl <- sdf_copy_to(
   sc, data.frame(id = 1:3, name = LETTERS[1:3])
 )

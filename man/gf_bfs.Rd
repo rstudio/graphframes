@@ -4,8 +4,8 @@
 \alias{gf_bfs}
 \title{Breadth-first search (BFS)}
 \usage{
-gf_bfs(x, from_expr, to_expr, max_path_length = 10L, edge_filter = NULL,
-  ...)
+gf_bfs(x, from_expr, to_expr, max_path_length = 10L,
+  edge_filter = NULL, ...)
 }
 \arguments{
 \item{x}{An object coercable to a GraphFrame (typically, a

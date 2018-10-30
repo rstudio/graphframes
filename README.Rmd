@@ -46,7 +46,7 @@ library(sparklyr)
 library(dplyr)
 
 # connect to spark using sparklyr
-sc <- spark_connect(master = "local", version = "2.1.0")
+sc <- spark_connect(master = "local", version = "2.3.0")
 
 # copy highschool dataset to spark
 highschool_tbl <- copy_to(sc, ggraph::highschool, "highschool")

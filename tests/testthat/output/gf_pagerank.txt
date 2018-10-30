@@ -1,10 +1,10 @@
 # A tibble: 7 x 4
   id    name      age pagerank
   <chr> <chr>   <int>    <dbl>
-1 a     Alice      34    0.374
-2 b     Bob        36    2.21 
-3 c     Charlie    30    2.24 
-4 d     David      29    0.274
-5 e     Esther     32    0.309
-6 f     Fanny      36    0.274
-7 g     Gabby      60    0.15 
+1 a     Alice      34    0.449
+2 b     Bob        36    2.66 
+3 c     Charlie    30    2.69 
+4 d     David      29    0.328
+5 e     Esther     32    0.371
+6 f     Fanny      36    0.328
+7 g     Gabby      60    0.180

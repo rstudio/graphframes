@@ -38,7 +38,7 @@ The examples make use of the `highschool` dataset from the `ggplot` package.
 
 ## Getting Started
 
-We will calculate [PageRank](https://en.wikipedia.org/wiki/PageRank) over the `highschool` dataset as follows:
+We will calculate [PageRank](https://en.wikipedia.org/wiki/PageRank) over the built-in "friends" dataset as follows.
 
 ```{r message=FALSE}
 library(graphframes)
@@ -48,53 +48,60 @@ library(dplyr)
 # connect to spark using sparklyr
 sc <- spark_connect(master = "local", version = "2.3.0")
 
-# copy highschool dataset to spark
-highschool_tbl <- copy_to(sc, ggraph::highschool, "highschool")
+# obtain the example graph
+g <- gf_friends(sc)
 
-# create a table with unique vertices using dplyr
-vertices_tbl <- sdf_bind_rows(
-  highschool_tbl %>% distinct(from) %>% transmute(id = from),
-  highschool_tbl %>% distinct(to) %>% transmute(id = to)
-)
+# compute PageRank
+results <- gf_pagerank(g, tol = 0.01, reset_probability = 0.15)
+results
+```
 
-# create a table with <source, destination> edges
-edges_tbl <- highschool_tbl %>% transmute(src = from, dst = to)
+We can then visualize the results by collecting the results to R:
 
-gf_graphframe(vertices_tbl, edges_tbl) %>%
-  gf_pagerank(reset_prob = 0.15, max_iter = 10L, source_id = "1")
+```{r, message = FALSE}
+library(tidygraph)
+library(ggraph)
+
+vertices <- results %>%
+  gf_vertices() %>%
+  collect()
+
+edges <- results %>%
+  gf_edges() %>%
+  collect()
+
+edges %>%
+  as_tbl_graph() %>%
+  activate(nodes) %>%
+  left_join(vertices, by = c(name = "id")) %>%
+  ggraph(layout = "nicely") +
+  geom_node_label(aes(label = name.y, color = pagerank)) +
+  geom_edge_link(
+    aes(
+      alpha = weight,
+      start_cap = label_rect(node1.name.y),
+      end_cap = label_rect(node2.name.y)
+    ),
+    arrow = arrow(length = unit(4, "mm"))
+  ) +
+  theme_graph(fg_text_colour = 'white')
 ```
 
 ## Further Reading
 
-Appart from calculating `PageRank` using `gf_pagerank`, the following functions are available: 
+Appart from calculating `PageRank` using `gf_pagerank`, many other functions are available, including: 
 
-- gf_bfs: Breadth-first search (BFS).
-- gf_connected_components: Connected components.
-- gf_shortest_paths: Shortest paths algorithm.
-- gf_scc: Strongly connected components.
-- gf_triangle_count: Computes the number of triangles passing through each vertex and others.
+- `gf_bfs()`: Breadth-first search (BFS).
+- `gf_connected_components()`: Connected components.
+- `gf_shortest_paths()`: Shortest paths algorithm.
+- `gf_scc()`: Strongly connected components.
+- `gf_triangle_count()`: Computes the number of triangles passing through each vertex and others.
+- `gf_degrees()`: Degrees of vertices
 
-For instance, one can calcualte the degrees of vertices using `gf_degrees` as follows:
-
-```{r message=FALSE}
-gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
-```
-
-In order to visualize large `graphframe`s, one can use `sample_n` and then use `ggraph` with `igraph` to visualize the graph as follows:
+For instance, one can calculate the degrees of vertices using `gf_degrees` as follows:
 
 ```{r message=FALSE}
-library(ggraph)
-library(igraph)
-
-graph <- highschool_tbl %>%
-  sample_n(20) %>%
-  collect() %>%
-  graph_from_data_frame()
-
-ggraph(graph, layout = 'kk') + 
-    geom_edge_link(aes(colour = factor(year))) + 
-    geom_node_point() + 
-    ggtitle('An example')
+gf_friends(sc) %>% gf_degrees()
 ```
 
 Finally, we disconnect from Spark:

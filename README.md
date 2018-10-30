@@ -1,14 +1,24 @@
 R interface for GraphFrames
 ================
 
-[![Build Status](https://travis-ci.org/rstudio/graphframes.svg?branch=master)](https://travis-ci.org/rstudio/graphframes) [![Coverage status](https://codecov.io/gh/rstudio/graphframes/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/graphframes?branch=master) [![CRAN status](https://www.r-pkg.org/badges/version/graphframes)](https://cran.r-project.org/package=graphframes)
+[![Build
+Status](https://travis-ci.org/rstudio/graphframes.svg?branch=master)](https://travis-ci.org/rstudio/graphframes)
+[![Coverage
+status](https://codecov.io/gh/rstudio/graphframes/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/graphframes?branch=master)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/graphframes)](https://cran.r-project.org/package=graphframes)
 
--   Support for [GraphFrames](https://graphframes.github.io/) which aims to provide the functionality of [GraphX](http://spark.apache.org/graphx/).
--   Perform graph algorithms like: [PageRank](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.PageRank), [ShortestPaths](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.ShortestPaths) and many [others](https://graphframes.github.io/api/scala/#package).
--   Designed to work with [sparklyr](https://spark.rstudio.com) and the [sparklyr extensions](http://spark.rstudio.com/extensions.html).
+  - Support for [GraphFrames](https://graphframes.github.io/) which aims
+    to provide the functionality of
+    [GraphX](http://spark.apache.org/graphx/).
+  - Perform graph algorithms like:
+    [PageRank](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.PageRank),
+    [ShortestPaths](https://graphframes.github.io/api/scala/index.html#org.graphframes.lib.ShortestPaths)
+    and many [others](https://graphframes.github.io/api/scala/#package).
+  - Designed to work with [sparklyr](https://spark.rstudio.com) and the
+    [sparklyr extensions](http://spark.rstudio.com/extensions.html).
 
-Installation
-------------
+## Installation
 
 For those already using `sparklyr` simply run:
 
@@ -24,12 +34,13 @@ Otherwise, install first `sparklyr` from CRAN using:
 install.packages("sparklyr")
 ```
 
-The examples make use of the `highschool` dataset from the `ggplot` package.
+The examples make use of the `highschool` dataset from the `ggplot`
+package.
 
-Getting Started
----------------
+## Getting Started
 
-We will calculate [PageRank](https://en.wikipedia.org/wiki/PageRank) over the `highschool` dataset as follows:
+We will calculate [PageRank](https://en.wikipedia.org/wiki/PageRank)
+over the built-in “friends” dataset as follows.
 
 ``` r
 library(graphframes)
@@ -37,84 +48,90 @@ library(sparklyr)
 library(dplyr)
 
 # connect to spark using sparklyr
-sc <- spark_connect(master = "local", version = "2.1.0")
+sc <- spark_connect(master = "local", version = "2.3.0")
 
-# copy highschool dataset to spark
-highschool_tbl <- copy_to(sc, ggraph::highschool, "highschool")
+# obtain the example graph
+g <- gf_friends(sc)
 
-# create a table with unique vertices using dplyr
-vertices_tbl <- sdf_bind_rows(
-  highschool_tbl %>% distinct(from) %>% transmute(id = from),
-  highschool_tbl %>% distinct(to) %>% transmute(id = to)
-)
-
-# create a table with <source, destination> edges
-edges_tbl <- highschool_tbl %>% transmute(src = from, dst = to)
-
-gf_graphframe(vertices_tbl, edges_tbl) %>%
-  gf_pagerank(reset_prob = 0.15, max_iter = 10L, source_id = "1")
+# compute PageRank
+results <- gf_pagerank(g, tol = 0.01, reset_probability = 0.15)
+results
 ```
 
     ## GraphFrame
     ## Vertices:
-    ##   $ id       <dbl> 12, 12, 59, 59, 1, 1, 20, 20, 45, 45, 8, 8, 9, 9, 26,...
-    ##   $ pagerank <dbl> 1.216914e-02, 1.216914e-02, 1.151867e-03, 1.151867e-0...
+    ##   $ id       <chr> "f", "b", "g", "a", "d", "c", "e"
+    ##   $ name     <chr> "Fanny", "Bob", "Gabby", "Alice", "David", "Charlie",...
+    ##   $ age      <int> 36, 36, 60, 34, 29, 30, 32
+    ##   $ pagerank <dbl> 0.3283607, 2.6555078, 0.1799821, 0.4491063, 0.3283607...
     ## Edges:
-    ##   $ src    <dbl> 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13,...
-    ##   $ dst    <dbl> 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 22, 22,...
-    ##   $ weight <dbl> 0.02777778, 0.02777778, 0.02777778, 0.02777778, 0.02777...
+    ##   $ src          <chr> "b", "c", "d", "e", "a", "a", "e", "f"
+    ##   $ dst          <chr> "c", "b", "a", "f", "e", "b", "d", "c"
+    ##   $ relationship <chr> "follow", "follow", "friend", "follow", "friend",...
+    ##   $ weight       <dbl> 1.0, 1.0, 1.0, 0.5, 0.5, 0.5, 0.5, 1.0
 
-Further Reading
----------------
-
-Appart from calculating `PageRank` using `gf_pagerank`, the following functions are available:
-
--   gf\_bfs: Breadth-first search (BFS).
--   gf\_connected\_components: Connected components.
--   gf\_shortest\_paths: Shortest paths algorithm.
--   gf\_scc: Strongly connected components.
--   gf\_triangle\_count: Computes the number of triangles passing through each vertex and others.
-
-For instance, one can calcualte the degrees of vertices using `gf_degrees` as follows:
+We can then visualize the results by collecting the results to R:
 
 ``` r
-gf_graphframe(vertices_tbl, edges_tbl) %>% gf_degrees()
-```
-
-    ## # Source:   table<sparklyr_tmp_8f86ee63e8a> [?? x 2]
-    ## # Database: spark_connection
-    ##       id degree
-    ##    <dbl>  <int>
-    ##  1   55.     25
-    ##  2    6.     10
-    ##  3   13.     16
-    ##  4    7.      6
-    ##  5   12.     11
-    ##  6   63.     21
-    ##  7   58.      8
-    ##  8   41.     19
-    ##  9   48.     15
-    ## 10   59.     11
-    ## # ... with more rows
-
-In order to visualize large `graphframe`s, one can use `sample_n` and then use `ggraph` with `igraph` to visualize the graph as follows:
-
-``` r
+library(tidygraph)
 library(ggraph)
-library(igraph)
 
-graph <- highschool_tbl %>%
-  sample_n(20) %>%
-  collect() %>%
-  graph_from_data_frame()
+vertices <- results %>%
+  gf_vertices() %>%
+  collect()
 
-ggraph(graph, layout = 'kk') + 
-    geom_edge_link(aes(colour = factor(year))) + 
-    geom_node_point() + 
-    ggtitle('An example')
+edges <- results %>%
+  gf_edges() %>%
+  collect()
+
+edges %>%
+  as_tbl_graph() %>%
+  activate(nodes) %>%
+  left_join(vertices, by = c(name = "id")) %>%
+  ggraph(layout = "nicely") +
+  geom_node_label(aes(label = name.y, color = pagerank)) +
+  geom_edge_link(
+    aes(
+      alpha = weight,
+      start_cap = label_rect(node1.name.y),
+      end_cap = label_rect(node2.name.y)
+    ),
+    arrow = arrow(length = unit(4, "mm"))
+  ) +
+  theme_graph(fg_text_colour = 'white')
 ```
 
-![](tools/readme/unnamed-chunk-5-1.png)
+![](tools/readme/unnamed-chunk-4-1.png)<!-- -->
+
+## Further Reading
+
+Appart from calculating `PageRank` using `gf_pagerank`, many other
+functions are available, including:
+
+  - `gf_bfs()`: Breadth-first search (BFS).
+  - `gf_connected_components()`: Connected components.
+  - `gf_shortest_paths()`: Shortest paths algorithm.
+  - `gf_scc()`: Strongly connected components.
+  - `gf_triangle_count()`: Computes the number of triangles passing
+    through each vertex and others.
+  - `gf_degrees()`: Degrees of vertices
+
+For instance, one can calculate the degrees of vertices using
+`gf_degrees` as follows:
+
+``` r
+gf_friends(sc) %>% gf_degrees()
+```
+
+    ## # Source: spark<?> [?? x 2]
+    ##   id    degree
+    ## * <chr>  <int>
+    ## 1 f          2
+    ## 2 b          3
+    ## 3 a          3
+    ## 4 c          3
+    ## 5 e          3
+    ## 6 d          2
 
 Finally, we disconnect from Spark:
 

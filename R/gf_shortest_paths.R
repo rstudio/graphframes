@@ -14,7 +14,7 @@
 #' }
 #' @export
 gf_shortest_paths <- function(x, landmarks, ...) {
-  landmarks <- lapply(landmarks, ensure_scalar_character)
+  landmarks <- cast_string_list(landmarks)
 
   gf <- spark_graphframe(x)
 

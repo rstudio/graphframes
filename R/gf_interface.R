@@ -206,7 +206,7 @@ gf_degrees <- function(x) {
 #' }
 #' @export
 gf_find <- function(x, pattern) {
-  ensure_scalar_character(pattern)
+  pattern <- cast_string(pattern)
 
   x %>%
     spark_graphframe() %>%
@@ -236,7 +236,7 @@ gf_cache <- function(x) {
 #'
 #' @export
 gf_persist <- function(x, storage_level = "MEMORY_AND_DISK") {
-  ensure_scalar_character(storage_level)
+  storage_level <- cast_string(storage_level)
   gf <- spark_graphframe(x)
   storage_level <- invoke_static(
     spark_connection(gf),
@@ -257,7 +257,7 @@ gf_persist <- function(x, storage_level = "MEMORY_AND_DISK") {
 #'
 #' @export
 gf_unpersist <- function(x, blocking = FALSE) {
-  ensure_scalar_boolean(blocking)
+  blocking <- cast_scalar_logical(blocking)
 
   x %>%
     spark_graphframe() %>%

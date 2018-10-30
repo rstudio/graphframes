@@ -21,8 +21,8 @@ gf_connected_components <- function(x,
                                     algorithm = c("graphframes", "graphx"),
                                     checkpoint_interval = 2L, ...) {
   algorithm <- match.arg(algorithm)
-  broadcast_threshold <- ensure_scalar_integer(broadcast_threshold)
-  checkpoint_interval <- ensure_scalar_integer(checkpoint_interval)
+  broadcast_threshold <- cast_scalar_integer(broadcast_threshold)
+  checkpoint_interval <- cast_scalar_integer(checkpoint_interval)
 
   gf <- spark_graphframe(x)
 

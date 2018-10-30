@@ -26,7 +26,7 @@ gf_friends <- function(sc) {
 #' }
 #' @export
 gf_chain <- function(sc, n) {
-  n <- ensure_scalar_integer(n)
+  n <- cast_scalar_integer(n)
   examples_graphs(sc) %>%
     invoke("chain", n) %>%
     gf_register()
@@ -59,9 +59,9 @@ gf_chain <- function(sc, n) {
 #' @export
 gf_grid_ising_model <- function(sc, n, v_std = 1, e_std = 1) {
   sql_context <- invoke_new(sc, "org.apache.spark.sql.SQLContext", spark_context(sc))
-  n <- ensure_scalar_integer(n)
-  v_std <- ensure_scalar_double(v_std)
-  e_std <- ensure_scalar_double(e_std)
+  n <- cast_scalar_integer(n)
+  v_std <- cast_scalar_double(v_std)
+  e_std <- cast_scalar_double(e_std)
 
   examples_graphs(sc) %>%
     invoke("gridIsingModel", sql_context, n, v_std, e_std) %>%
@@ -81,7 +81,7 @@ gf_grid_ising_model <- function(sc, n, v_std = 1, e_std = 1) {
 #' }
 #' @export
 gf_star <- function(sc, n) {
-  n <- ensure_scalar_integer(n)
+  n <- cast_scalar_integer(n)
 
   examples_graphs(sc) %>%
     invoke("star", n) %>%
@@ -101,7 +101,7 @@ gf_star <- function(sc, n) {
 #' }
 #' @export
 gf_two_blobs <- function(sc, blob_size) {
-  blob_size <- ensure_scalar_integer(blob_size)
+  blob_size <- cast_scalar_integer(blob_size)
 
   examples_graphs(sc) %>%
     invoke("twoBlobs", blob_size) %>%
